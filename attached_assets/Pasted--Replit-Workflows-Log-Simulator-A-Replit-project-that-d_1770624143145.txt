@@ -1,0 +1,67 @@
+# Replit Workflows – Log Simulator
+
+A Replit project that demonstrates **Replit Workspace Workflows** and provides a **Streamlit log and error simulator** for testing log pipelines or analytics dashboards.
+
+> **Note:** The folder name "Git workflow" refers to this being a workflow demo on Replit. It is not a Git branching or pull-request workflow.
+
+## Features
+
+- **Replit Workflows** – Run button starts the app via a configured workflow (shell task → Streamlit → webview).
+- **Log simulation** – Continuously generates sample log lines (e.g. "Processing request from client", "Database query executed successfully") with timestamps.
+- **Error injection** – Inject predefined errors on demand to simulate failures:
+  - NullPointerException
+  - ConnectionTimeoutError
+  - OutOfMemoryError
+  - FileNotFoundException
+  - AuthenticationError
+  - PermissionDenied
+- **Live log view** – Scrollable stream of INFO (green) and ERROR (red) entries; keeps the last 100 lines.
+
+## Project Structure
+
+```
+├── .replit              # Replit config: deployment + workflows
+├── app.py               # Streamlit log simulator UI
+├── main.py              # Stub entrypoint
+├── pyproject.toml       # Python 3.11, Streamlit dependency
+├── .streamlit/
+│   └── config.toml      # Streamlit settings
+└── README.md
+```
+
+## How to Run
+
+### On Replit
+
+1. Open the project in Replit.
+2. Click **Run** (or use the configured workflow). The "Project" workflow starts the "Streamlit App" workflow, which runs Streamlit and opens the app in a webview on port 5000.
+
+### Locally
+
+```bash
+# From this folder
+pip install streamlit   # or: uv sync
+streamlit run app.py --server.port 5000
+```
+
+Then open http://localhost:5000 in your browser.
+
+## Workflows (.replit)
+
+| Workflow       | Mode     | Description |
+|----------------|----------|-------------|
+| **Project**    | parallel | Top-level; runs the "Streamlit App" workflow. |
+| **Streamlit App** | —     | Runs `streamlit run app.py --server.port 5000`, waits for port 5000, opens webview. |
+
+Deployment is set to **autoscale** with the same run command.
+
+## Dependencies
+
+- Python 3.11+
+- Streamlit (see `pyproject.toml`)
+
+## Use Cases
+
+- Demo Replit Workflows (run → shell → webview).
+- Generate fake logs and errors for testing the [Replit-DataApp](https://github.com/Allen-John-Manoj/Replit-DataApp) or other log analytics tools.
+- Simulate exception types when building automation or remediation workflows.
