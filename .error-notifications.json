@@ -1,0 +1,16 @@
+[
+  {
+    "errorType": "AuthenticationError",
+    "message": "AuthenticationError: Invalid credentials for user admin@example.com",
+    "severity": "CRITICAL",
+    "notifiedAt": "2026-02-09T08:12:02.487Z",
+    "requiresManualIntervention": true
+  },
+  {
+    "errorType": "PermissionDenied",
+    "message": "PermissionDenied: User lacks write access to /var/data/reports",
+    "severity": "HIGH",
+    "notifiedAt": "2026-02-09T08:12:04.993Z",
+    "requiresManualIntervention": true
+  }
+]

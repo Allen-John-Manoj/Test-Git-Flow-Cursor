@@ -60,19 +60,14 @@ import { inngest, inngestServe } from "./inngest";
 // Available: src/triggers/slackTriggers.ts, telegramTriggers.ts, exampleConnectorTrigger.ts
 // ======================================================================
 
-// ======================================================================
-// IMPORT YOUR AGENTS AND WORKFLOWS
-// ======================================================================
-// Import your custom agents and workflows here.
-// See src/examples/ directory for complete examples:
-// - src/examples/exampleAgent.ts
-// - src/examples/exampleWorkflow.ts
-// - src/examples/exampleTool.ts
-//
-// Example imports:
-// import { myAgent } from "./agents/myAgent";
-// import { myWorkflow } from "./workflows/myWorkflow";
-// ======================================================================
+import { registerCronTrigger } from "../triggers/cronTriggers";
+import { errorResolutionAgent } from "./agents/errorResolutionAgent";
+import { errorResolutionWorkflow } from "./workflows/errorResolutionWorkflow";
+
+registerCronTrigger({
+  cronExpression: process.env.SCHEDULE_CRON_EXPRESSION || "* * * * *",
+  workflow: errorResolutionWorkflow,
+});
 
 class ProductionPinoLogger extends MastraLogger {
   protected logger: pino.Logger;
@@ -117,10 +112,8 @@ class ProductionPinoLogger extends MastraLogger {
 
 export const mastra = new Mastra({
   storage: sharedPostgresStorage,
-  // Register your workflows here
-  workflows: {},
-  // Register your agents here
-  agents: {},
+  workflows: { errorResolutionWorkflow },
+  agents: { errorResolutionAgent },
   bundler: {
     // A few dependencies are not properly picked up by
     // the bundler if they are not added directly to the
